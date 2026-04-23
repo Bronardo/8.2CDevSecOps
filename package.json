@@ -13,7 +13,7 @@
     "build": "browserify -r jquery > public/js/bundle.js",
     "cleanup": "mongo express-todo --eval 'db.todos.remove({});'",
     "test": "snyk test",
-    "coverage": "nyc --reporter=lcov --reporter=text node app.js --help || true"
+    "coverage": "nyc --reporter=lcov --reporter=text --report-dir=./coverage node app.js --help || true"
   },
   "dependencies": {
     "adm-zip": "0.4.7",

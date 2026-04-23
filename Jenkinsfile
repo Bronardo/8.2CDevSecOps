@@ -56,11 +56,14 @@ pipeline {
                         mv sonar-scanner-5.0.1.3006-linux sonar-scanner-cli
                     fi
 
-                    # 3. Execute Analysis
-                    # We force the branch name to 'main' to comply with SonarCloud Free Tier
+                    # Check if the file exists before running (for debugging in console)
+                    ls -l coverage/lcov.info || echo "LCOV report NOT found"
+
+                    # Execute Analysis with explicit path fix
                     ./sonar-scanner-cli/bin/sonar-scanner \
                       -Dsonar.token=${SONAR_TOKEN} \
-                      -Dsonar.branch.name=main
+                      -Dsonar.branch.name=main \
+                      -Dsonar.scm.disabled=true
                     '''
                 }
             }
