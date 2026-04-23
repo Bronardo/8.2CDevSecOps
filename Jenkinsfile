@@ -10,27 +10,32 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'feature/sonarcloud-integration', 
-                    url: 'https://github.com/YOUR_GITHUB_USERNAME/8.2CDevSecOps.git'
+                    url: 'https://github.com/Bronardo/8.2CDevSecOps.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm install --no-audit'
             }
         }
 
-        stage('Run Tests & Coverage') {
+        stage('Run Tests') {
             steps {
-                // We use || true to ensure the pipeline continues even if the 
-                // intentionally "vulnerable" tests fail.
+                sh 'npm test || true'  // Allows pipeline to continue despite test failures
+            }
+        }
+
+        stage('Generate Coverage Report') {
+            steps {
+                // Ensure coverage report exists
                 sh 'npm run coverage || true'
             }
         }
 
-        stage('NPM Audit') {
+        stage('NPM Audit (Security Scan)') {
             steps {
-                sh 'npm audit || true'
+                sh 'npm audit || true' // This will show known CVEs in the output
             }
         }
 
