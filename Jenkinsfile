@@ -3,7 +3,7 @@ pipeline {
     
     // Triggers a build when a change is detected via polling
     triggers {
-        pollSCM('H/2 * * * *')
+        pollSCM('H/1 * * * *')
     }
 
     stages {
